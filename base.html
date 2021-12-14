@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+      crossorigin="anonymous"
+    />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        .fa-user-lock {
+            font-size: 3rem;
+            color: #DD246B;
+        }
+        body {
+            font-family: Roboto, 'Courier New', Courier, monospace;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        .link-hover:hover {
+            background: #E7E7E8;
+            border-radius: 50px;
+        }
+
+        .fa-cloud-upload-alt:hover {
+            cursor: pointer;
+        }
+        .fa-heart:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {%for category, message in messages%}
+            {% if category == 'error' %}
+            <div class="alert alert-danger alert-dismissable fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% else %}
+            <div class="alert alert-success alert-dismissable fade show" role="alert">
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="d-flex align-items-start">
+        {% if user.id %}
+        <div class="w-25 border" style="height: 100vh;">
+            <div class="home w-100 h-100 p-5 d-flex flex-column align-items-center" style="font-size: 1.3rem;">
+                <a href="/" class="navbar-brand m-3">
+                    <i class="fab fa-free-code-camp" style="font-size: 4rem; color: #e25822;"></i>
+                </a>
+                <ul class="navbar-nav w-100 m-3 link-hover">
+                    <li class="nav-item d-flex align-items-center justify-content-center w-100">
+                        <i class="fas fa-home mr-4"></i>
+                        <a href="/" class="nav-link text-dark">Home</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav w-100 m-3 link-hover">
+                    <li class="nav-item d-flex align-items-center justify-content-center w-100">
+                        <i class="fas fa-user mr-4"></i>
+                        <a href="/profile" class="nav-link text-dark">Profile</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav w-100 m-3 link-hover">
+                    <li class="nav-item d-flex align-items-center justify-content-center w-100">
+                        <i class="fas fa-sign-out-alt mr-4"></i>
+                        <a href="/auth/logout" class="nav-link text-dark">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        {% block content %}
+        {% block heading %}
+        {% endblock %}
+        {% endblock %}
+        {%if user.id%}
+        {%endif%}
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>

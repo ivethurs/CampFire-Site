@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="w-50">
+    <h2 class="text-center">Followings</h2>
+    {% if followings | length %}
+    <ul class="list-group">
+        {% for following in followings %}
+        <li class="list-group-item d-flex align-items-center justify-content-around">
+            <a href="/profile/{{following.id}}" class="w-25">
+                {% if following.profile %}
+                <img src="data:image/png;base64,{{following.profile}}" class="w-100 rounded-circle"/>
+                {%else%}
+                <img src="{{url_for('static', filename='default_profile.png')}}" class="w-100 rounded-circle"/>
+                {%endif%}
+            </a>
+            <p>{{following.first_name}} {{following.last_name}}</p>
+        </li>
+    </ul>
+    {%else%}
+        <h1 class="text-center">No Followings</h1>
+    </div>
+    {%endfor%}
+    {% endif %}
+
+{% endblock %}

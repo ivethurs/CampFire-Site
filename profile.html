@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container w-50 border mx-auto d-flex p-4 flex-column" style="height: 100vh;">
+        {% if user.profile %}
+        <div class="profile-image d-flex flex-column align-items-center justify-content-center w-100 my-2 mx-auto">
+            <img src="data:image/png;base64,{{user.profile}}" class="w-25 rounded-circle" />
+            <div class="name">{{user.first_name}} {{user.last_name}}</div>
+        </div>
+        {%else%}
+        <div class="profile-image d-flex flex-column align-items-center justify-content-center w-100 my-2 mx-auto">
+            <img src="{{url_for('static', filename='default_profile.png')}}" class="w-25 rounded-circle" >
+            <div class="name">{{user.first_name}} {{user.last_name}}</div>
+        </div>
+        {% endif %}
+    <div class="d-flex w-100 justify-content-around my-3">
+        <a href="/followers/{{user.id}}" class="followers">{{user.followers|replace(']', '')|replace('[', '')|replace(' ', '')|replace(',','')|list | length}} followers</a>        
+        <a href="/followings/{{user.id}}" class="followings">{{user.followings|replace(']', '')|replace('[', '')|replace(' ', '')|replace(',','')|list | length}} followings</a>        
+    </div>
+    {%if current_user.id != user.id%}
+    {% if current_user.id|string in user.followers | list %}
+    <div class="button mx-auto w-100 mt-3" align="center">
+        <a onClick="unfollowUser({{user.id}})" class="follow-button btn btn-primary text-white w-50">unfollow</a>
+    </div>
+    {%else%}
+    <div class="button mx-auto w-100 mt-3" align="center">
+        <a onClick="followUser({{user.id}})" class="follow-button btn btn-primary text-white w-50">follow</a>
+    </div>  
+    {%endif%}
+    {%endif%}
+</div>
+{%endblock%}

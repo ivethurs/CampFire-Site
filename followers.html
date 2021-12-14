@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="w-50">
+    <h2 class="text-center">Followers</h2>
+    {% if followers | length%}
+    <ul class="list-group">
+        {% for follower in followers %}
+        <li class="list-group-item d-flex align-items-center justify-content-around">
+            <a href="/profile/{{follower.id}}" class="w-25">
+                {% if follower.profile %}
+                <img src="data:image/png;base64,{{follower.profile}}" class="w-100 rounded-circle"/>
+                {%else%}
+                <img src="{{url_for('static', filename='default_profile.png')}}" class="w-100 rounded-circle"/>
+                {%endif%}
+            </a>
+            <p>{{follower.first_name}} {{follower.last_name}}</p>
+        </li>
+    </ul>
+</div>
+    {%endfor%}
+    {% else %}
+        <h1 class="text-center">No Followers</h1>
+    {% endif %}
+{% endblock %}
